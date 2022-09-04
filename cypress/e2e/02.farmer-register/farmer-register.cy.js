@@ -1,47 +1,57 @@
-context("Actions", () => {
+const { afterEach } = require("mocha");
+
+context("Actions farmer register page 1", () => {
   beforeEach(() => {
     cy.visit("https://trpdemo.dto.technology");
   });
 
   function userName(inputUsername) {
-    if (inputUsername == "result01") {
+    if (inputUsername == "Username001") {
       cy.get(":nth-child(1) > .flex-rows > .flex > .outline-none")
-        .type("abcd1234")
-        .should("have.value", "abcd1234");
+        .type("Username001")
+        .should("have.value", "Username001");
     }
-    if (inputUsername == "result02") {
+    if (inputUsername == "textInt") {
       cy.get(":nth-child(1) > .flex-rows > .flex > .outline-none")
-        .type("234")
-        .should("have.value", "234");
+        .type("23423")
+        .should("have.value", "23423");
     }
-    if (inputUsername == "result03") {
+    if (inputUsername == "Symbols") {
       cy.get(":nth-child(1) > .flex-rows > .flex > .outline-none")
-        .type("=--././")
-        .should("have.value", "=--././");
+        .type("=--./.>><<")
+        .should("have.value", "=--./.>><<");
     }
-    if (inputUsername == "result04") {
+    if (inputUsername == "thaiEng") {
       cy.get(":nth-child(1) > .flex-rows > .flex > .outline-none")
         .type("!ทดtobb")
         .should("have.value", "!ทดtobb");
+    }
+    if (inputUsername == "thai") {
+      cy.get(":nth-child(1) > .flex-rows > .flex > .outline-none")
+        .type("กดชกร")
+        .should("have.value", "กดชกร");
     } else {
       cy.get(":nth-child(1) > .flex-rows > .flex > .outline-none");
-      // .type("กดชกร")
-      // .should("have.value", "กดชกร");
     }
   }
 
   function phoneNumber(number) {
-    if (number == "ture") {
+    if (number == "int10unit") {
       cy.get(":nth-child(2) > .outline-none").type("0000000000");
-      // .should("have.value", "0000000000");
+    }
+    if (number == "int5unit") {
+      cy.get(":nth-child(2) > .outline-none").type("12345");
     } else {
       cy.get(":nth-child(2) > .outline-none").type("cdsdadcfdd");
-      // .should("have.value", "cdsdadcfdd");
     }
   }
 
+  // afterEach(() => {
+  //   cy.get(':nth-child(2) > .h-\[17px\] > .text-sm').should("be.a" , "กรุณากรอกเบอร์โทรศัพท์")
+  // });
+
   function password(text) {
-    if (text == "1") {
+    if (text == "password") {
       cy.get(":nth-child(3) > .outline-none").type("password21");
     } else {
       cy.get(":nth-child(3) > .outline-none").type("12");
@@ -49,10 +59,11 @@ context("Actions", () => {
   }
 
   function checkPassword(textcheck) {
-    if (textcheck == password("password21")) {
+    if (textcheck == "confirmPassword") {
       cy.get(":nth-child(4) > .outline-none").type("password21");
     } else {
-      cy.get(":nth-child(4) > .outline-none").type("12");
+      cy.get(":nth-child(4) > .outline-none").type("12")
+      expect()
     }
   }
 
@@ -69,36 +80,85 @@ context("Actions", () => {
   }
 
   function lineID(line) {
-    if (line == "1") {
-      cy.get(":nth-child(6) > .flex > .outline-none").type("@123abc");
+    if (line == "linetext") {
+      cy.get(":nth-child(6) > .flex > .outline-none").type("123abc");
     } else {
-      cy.get(":nth-child(6) > .flex > .outline-none").type("1234");
+      cy.get(":nth-child(6) > .flex > .outline-none").type("@1234");
     }
   }
 
   function prompayID(prompay) {
-    if (prompay == "1") {
+    if (prompay == "int") {
       cy.get(":nth-child(7) > .flex > .outline-none").type("0987654321");
+    } else {
+      cy.get(":nth-child(7) > .flex > .outline-none").type("abcd0987654");
     }
   }
 
   function btuSubmit(submitstep1) {
     if (submitstep1 == "1") {
-      cy.get("form").submit();
+      // cy.wait(4000);
+      cy.get("form").find("button").last().click();
     }
   }
 
-  it("the first page register for farmer", () => {
+  it("case 1", () => {
     cy.get(".mx-2").click();
-    
-    userName("result01");
-    phoneNumber("ture");
-    password("1");
-    checkPassword();
+    userName("Username001");
+    phoneNumber("int10unit");
+    password("password");
+    checkPassword("confirmPassword");
     email("mail1");
-    lineID("1");
-    prompayID("1");
-    cy.wait(4000)
-    cy.get('.justify-between > :nth-child(2) > .h-\[41px\]').click()
+    lineID("linetext");
+    prompayID("int");
+    btuSubmit("1");
+  });
+
+  it("case 2", () => {
+    cy.get(".mx-2").click();
+    userName("textInt");
+    phoneNumber("int5unit");
+    password("password");
+    checkPassword("confirmPassword");
+    email("mail1");
+    lineID("linetext");
+    prompayID("int");
+    btuSubmit("1");
+  });
+
+  it("case 3", () => {
+    cy.get(".mx-2").click();
+    userName("Symbols");
+    phoneNumber();
+    password();
+    checkPassword();
+    email();
+    lineID();
+    prompayID();
+    btuSubmit("1");
+  });
+
+  it("case 4", () => {
+    cy.get(".mx-2").click();
+    userName("thaiEng");
+    phoneNumber("int10unit");
+    password();
+    checkPassword();
+    email();
+    lineID();
+    prompayID();
+    btuSubmit("1");
+  });
+
+  it("case 5", () => {
+    cy.get(".mx-2").click();
+    userName("thai");
+    phoneNumber();
+    password();
+    checkPassword();
+    email();
+    lineID();
+    prompayID();
+    btuSubmit("1");
   });
 });
